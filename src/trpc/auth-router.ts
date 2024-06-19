@@ -10,8 +10,8 @@ export const authRouter = router({
     .mutation(async ({ input }) => {
       const { email, password } = input;
       const payload = await getPayloadClient();
+      
       //check userr already exist
-
       const { docs: users } = await payload.find({
         collection: "users",
         where: {

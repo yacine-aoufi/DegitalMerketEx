@@ -14,9 +14,20 @@ import { formatPrice } from "@/lib/utils";
 import Link from "next/link";
 import { buttonVariants } from "./ui/button";
 import Image from "next/image";
+import { useCart } from "@/hooks/use-carts";
+import { ScrollArea } from "./ui/scroll-area";
+import CartItem from "./CartItem";
 
 export default function Cart() {
-  const itemCount = 0;
+
+const{items}=useCart();
+
+  const itemCount = items.length;
+
+const cartTotal=items.reduce((total,{product})=>total+ product.price,0)
+
+
+
   const fee = 50;
   return (
     <Sheet>
@@ -24,17 +35,28 @@ export default function Cart() {
         <ShoppingCart className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-blue-600" />
 
         <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
-          0
+          {itemCount}
         </span>
       </SheetTrigger>
       <SheetContent className="flex h-full flex-col pr-0 sm:max-w-lg">
         <SheetHeader className="space-y-2.5 pr-6">
-          <SheetTitle>Cart(0)</SheetTitle>
+          <SheetTitle>Cart({itemCount})</SheetTitle>
         </SheetHeader>
         {itemCount > 0 ? (
           <>
             <div className="flex w-full flex-col pr-6">
               {/* TODO : cart logic */}
+
+
+{items.map(({product})=>(
+<ScrollArea key={product.id}>
+<CartItem product={product} />
+</ScrollArea>
+
+
+
+))}
+
               cart items
             </div>
             <div className="space-y-4 pr-6">
@@ -50,7 +72,7 @@ export default function Cart() {
                 </div>
                 <div className="flex">
                   <span className="flex-1 "> Total</span>
-                  <span>{formatPrice(fee)}</span>
+                  <span>{formatPrice(fee+cartTotal)}</span>
                 </div>
               </div>
               <SheetFooter>
