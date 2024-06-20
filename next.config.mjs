@@ -1,13 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
-      remotePatterns: [
-        {
-          protocol: 'http',
-          hostname: 'localhost',
-          port: '3000',
-          pathname: '/**', // Match all paths
-        },
+      domains: [
+'localhost',
+'degitalmerketex-production-2851.up.railway.app/',
       ],
     }, 
   };
